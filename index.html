@@ -4,221 +4,204 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>et1cruel — echoes in the void</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;300&display=swap');
+
         :root {
-            --bg-color: #050505;
-            --accent-color: #8a8a8a;
-            --text-main: #ffffff;
-            --glass: rgba(255, 255, 255, 0.05);
-            --border: rgba(255, 255, 255, 0.1);
+            --bg: #0a0a0a;
+            --text: #ffffff;
+            --dim: #555555;
+            --accent: #888;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Helvetica Neue', sans-serif;
-            margin: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-
-        /* --- Navbar --- */
-        nav {
-            width: 100%;
-            height: 60px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-        }
-
-        /* --- Profile Header --- */
-        .profile-container {
-            margin-top: 100px;
-            width: 90%;
-            max-width: 935px;
-            display: flex;
-            gap: 50px;
-            padding: 20px;
-        }
-
-        .avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #333, #000);
-            border: 2px solid var(--border);
-            display: flex;
-            align-items: center;
             justify-content: center;
-            font-size: 40px;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+            letter-spacing: -0.5px;
         }
 
-        .info h1 { font-size: 28px; font-weight: 300; margin: 0; }
-        .stats { display: flex; gap: 20px; margin: 20px 0; font-size: 14px; }
-        .bio { font-size: 14px; line-height: 1.6; }
-        .links a { color: var(--accent-color); text-decoration: none; margin-right: 10px; font-size: 12px; }
-
-        /* --- Buttons --- */
-        .btn-msg {
-            background: white;
-            color: black;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
+        /* --- ลูกเล่น Scanline แบบทีวีเก่า --- */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
         }
 
-        /* --- Post Grid --- */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            width: 100%;
-            max-width: 935px;
-            margin-top: 40px;
+        .container {
+            z-index: 3;
+            animation: fadeIn 2s ease-in;
         }
 
-        .post {
-            aspect-ratio: 1 / 1;
-            background: var(--glass);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-color);
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 100;
+            margin-bottom: 5px;
+            cursor: crosshair;
             transition: 0.3s;
         }
 
-        .post:hover { background: rgba(255,255,255,0.1); }
+        h1:hover {
+            text-shadow: 2px 0 red, -2px 0 blue;
+            letter-spacing: 5px;
+        }
 
-        /* --- Messenger Window --- */
-        .messenger-box {
+        .subtitle { color: var(--dim); font-size: 0.9rem; margin-bottom: 20px; }
+        .genres { color: var(--accent); font-size: 0.8rem; margin-bottom: 30px; }
+        .dimension { font-style: italic; font-size: 0.75rem; color: #444; margin-bottom: 40px; }
+
+        .links a {
+            color: var(--text);
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.85rem;
+            border-bottom: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+        .links a:hover { border-bottom: 1px solid var(--text); color: var(--dim); }
+
+        footer {
+            margin-top: 50px;
+            font-size: 0.7rem;
+            color: #333;
+        }
+
+        /* --- กล่องแชท (Messenger Box) --- */
+        .chat-box {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 300px;
-            height: 400px;
-            background: #121212;
-            border: 1px solid var(--border);
-            border-radius: 15px;
+            bottom: 30px;
+            right: 30px;
+            width: 280px;
+            background: rgba(15, 15, 15, 0.9);
+            border: 1px solid #222;
+            backdrop-filter: blur(5px);
+            text-align: left;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 10;
         }
 
         .chat-header {
-            padding: 15px;
-            border-bottom: 1px solid var(--border);
-            font-weight: bold;
+            padding: 8px 12px;
+            font-size: 0.7rem;
+            border-bottom: 1px solid #222;
+            color: var(--dim);
             display: flex;
             justify-content: space-between;
         }
 
-        .chat-content {
-            flex-grow: 1;
-            padding: 15px;
-            font-size: 13px;
+        #chat-content {
+            height: 150px;
             overflow-y: auto;
+            padding: 10px;
+            font-size: 0.75rem;
+            color: #ccc;
         }
 
-        .msg { margin-bottom: 10px; padding: 8px 12px; border-radius: 15px; max-width: 80%; }
-        .received { background: var(--glass); align-self: flex-start; }
-        .sent { background: #333; align-self: flex-end; margin-left: auto; }
-
         .chat-input {
+            border-top: 1px solid #222;
             padding: 10px;
-            border-top: 1px solid var(--border);
             display: flex;
         }
 
-        .chat-input input {
+        input {
             background: transparent;
             border: none;
             color: white;
-            flex-grow: 1;
+            font-family: 'JetBrains Mono';
+            font-size: 0.75rem;
             outline: none;
+            width: 100%;
         }
 
-        footer { margin: 50px; color: var(--accent-color); font-size: 11px; }
+        .msg-user { color: #888; margin-bottom: 5px; }
+        .msg-bot { color: #fff; margin-bottom: 10px; opacity: 0.8; }
 
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Scrollbar เล็กๆ */
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-thumb { background: #333; }
     </style>
 </head>
 <body>
 
-    <nav>
-        <i class="fas fa-home"></i>
-        <i class="fas fa-search"></i>
-        <i class="fas fa-plus-square"></i>
-        <i class="fas fa-heart"></i>
-        <i class="fas fa-user-circle"></i>
-    </nav>
+    <div class="container">
+        <h1>et1cruel</h1>
+        <div class="subtitle">artist • beatmaker • editor • designer</div>
+        <div class="genres">shoegaze / blackgaze / ambient / emo trap / cloud rap / emopluggnb</div>
+        
+        <div class="dimension">drifting through the fifth dimension</div>
 
-    <div class="profile-container">
-        <div class="avatar">et1</div>
-        <div class="info">
-            <h1>et1cruel</h1>
-            <div class="stats">
-                <span><b>512</b> posts</span>
-                <span><b>12.4k</b> followers</span>
-                <span><b>666</b> following</span>
-            </div>
-            <div class="bio">
-                <b>artist • beatmaker • editor • designer</b><br>
-                shoegaze / blackgaze / ambient / emo trap / cloud rap / emopluggnb<br>
-                <i>drifting through the fifth dimension</i>
-            </div>
-            <div class="links">
-                <a href="#">soundcloud</a>
-                <a href="#">instagram</a>
-                <a href="#">youtube</a>
-            </div>
-            <button class="btn-msg" onclick="toggleChat()">Message</button>
+        <div class="links">
+            <a href="#">soundcloud</a>
+            <a href="#">instagram</a>
+            <a href="#">youtube</a>
         </div>
+
+        <footer>© 2026 et1cruel — echoes in the void</footer>
     </div>
 
-    <div class="grid">
-        <div class="post">echoes</div>
-        <div class="post">void</div>
-        <div class="post">dimension</div>
-        <div class="post">gaze</div>
-        <div class="post">ambient</div>
-        <div class="post">trap</div>
-    </div>
-
-    <div class="messenger-box" id="chatBox">
+    <div class="chat-box">
         <div class="chat-header">
-            <span>et1cruel</span>
-            <span style="cursor:pointer" onclick="toggleChat()">—</span>
+            <span>MESSENGER</span>
+            <span style="cursor:pointer">_</span>
         </div>
-        <div class="chat-content">
-            <div class="msg received">ยินดีต้อนรับสู่มิติที่ 5...</div>
-            <div class="msg sent">ขอบคุณที่แชร์ผลงานครับ ชอบบีทคุณมาก</div>
-            <div class="msg received">ยินดีที่ได้รู้จัก ฝากติดตาม echoes in the void ด้วย</div>
+        <div id="chat-content">
+            <div class="msg-bot">[system]: connecting to the void...</div>
+            <div class="msg-bot">et1cruel: ...hello?</div>
         </div>
         <div class="chat-input">
-            <input type="text" placeholder="ส่งข้อความ...">
-            <i class="fas fa-paper-plane" style="color:var(--accent-color); cursor:pointer"></i>
+            <input type="text" id="chat-input" placeholder="type a message..." autocomplete="off">
         </div>
     </div>
 
-    <footer>© 2026 et1cruel — echoes in the void</footer>
-
     <script>
-        function toggleChat() {
-            const chat = document.getElementById('chatBox');
-            chat.style.display = chat.style.display === 'none' ? 'flex' : 'none';
-        }
-    </script>
+        const input = document.getElementById('chat-input');
+        const content = document.getElementById('chat-content');
 
+        input.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && this.value !== '') {
+                // เพิ่มข้อความคนพิมพ์
+                const userMsg = document.createElement('div');
+                userMsg.className = 'msg-user';
+                userMsg.textContent = '> ' + this.value;
+                content.appendChild(userMsg);
+
+                // สุ่มคำตอบจาก Void (Bot)
+                setTimeout(() => {
+                    const botMsg = document.createElement('div');
+                    botMsg.className = 'msg-bot';
+                    const responses = [
+                        "echoes...",
+                        "drifting away.",
+                        "can you hear the distortion?",
+                        "the fifth dimension is cold.",
+                        "new beats coming soon."
+                    ];
+                    botMsg.textContent = "et1cruel: " + responses[Math.floor(Math.random() * responses.length)];
+                    content.appendChild(botMsg);
+                    content.scrollTop = content.scrollHeight;
+                }, 600);
+
+                this.value = '';
+                content.scrollTop = content.scrollHeight;
+            }
+        });
+    </script>
 </body>
 </html>
