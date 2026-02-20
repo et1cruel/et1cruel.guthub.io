@@ -1,45 +1,143 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
-  <title>et1cruel</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>et1cruel — cruel like the coldest water</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
+  
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
     body {
-      background-color: #f4f4f4;
-      color: #888;
-      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      background: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=2000') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Roboto Mono', monospace;
+      color: #e0e0e0;
+      overflow-x: hidden;
+    }
+    
+    /* overlay ให้พื้นหลังมืดลงหน่อย ไม่ให้ตัวหนังสือลอย */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: -2;
+    }
+    
+    .container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      padding-top: 20vh;
-      letter-spacing: 2px;
+      padding: 2rem;
+      position: relative;
+      z-index: 1;
     }
-
+    
     h1 {
-      font-weight: 100;
-      font-size: 40px;
-      color: #bbb;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4rem, 12vw, 9rem);
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: -0.05em;
+      color: #f0f0f0;
+      text-shadow: 0 0 40px rgba(0,0,0,0.8), 0 4px 12px rgba(0,0,0,0.6);
+      margin-bottom: 0.4rem;
+      transition: transform 0.6s ease, text-shadow 0.6s ease;
     }
-
-    a {
-      display: block;
-      margin: 20px;
+    
+    h1:hover {
+      transform: scale(1.03);
+      text-shadow: 0 0 60px rgba(120, 200, 255, 0.4), 0 8px 20px rgba(0,0,0,0.7);
+    }
+    
+    .subtitle {
+      font-size: clamp(1.1rem, 4vw, 1.6rem);
+      max-width: 700px;
+      line-height: 1.6;
+      margin: 1.5rem 0 3rem;
+      opacity: 0.9;
+      letter-spacing: 0.03em;
+    }
+    
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .link {
+      font-size: 1.3rem;
+      color: #b0d0ff;
       text-decoration: none;
-      color: #999;
-      transition: 0.3s;
+      padding: 0.6rem 1.8rem;
+      border: 1px solid rgba(176, 208, 255, 0.3);
+      border-radius: 50px;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(4px);
+      background: rgba(20, 20, 30, 0.25);
     }
-
-    a:hover {
-      color: #000;
-      filter: blur(0.5px);
+    
+    .link:hover {
+      color: white;
+      background: rgba(100, 150, 255, 0.15);
+      border-color: rgba(176, 208, 255, 0.6);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    
+    footer {
+      position: absolute;
+      bottom: 1.5rem;
+      font-size: 0.9rem;
+      opacity: 0.6;
+      letter-spacing: 0.05em;
+    }
+    
+    @media (max-width: 600px) {
+      h1 { font-size: 5rem; }
+      .links { flex-direction: column; gap: 1.2rem; }
+      .link { width: 80%; margin: 0 auto; }
     }
   </style>
 </head>
 <body>
 
-  <h1>et1cruel</h1>
+  <div class="container">
+    <h1>et1cruel</h1>
+    
+    <p class="subtitle">
+      artist • beatmaker • editor • designer<br>
+      shoegaze / blackgaze / ambient / emo trap / cloud rap / emopluggnb<br><br>
+      cruel like the coldest water<br>
+      drowning in reverb & pixels
+    </p>
 
-  <a href="#">music</a>
-  <a href="#">visual</a>
-  <a href="#">archive</a>
-  <a href="#">contact</a>
+    <div class="links">
+      <a href="https://soundcloud.com/et1cruel" target="_blank" class="link">soundcloud</a>
+      <a href="https://instagram.com/et1cruel" target="_blank" class="link">instagram</a>
+      <a href="https://youtube.com/@dir.et1cruel" target="_blank" class="link">youtube (mv)</a>
+      <a href="https://github.com/et1cruel" target="_blank" class="link">github</a>
+      <!-- ถ้ามีลิงก์อื่นเพิ่มตรงนี้เลย เช่น bandcamp, twitch, spotify -->
+    </div>
+
+    <footer>
+      © 2026 et1cruel — all pain reserved
+    </footer>
+  </div>
 
 </body>
 </html>
